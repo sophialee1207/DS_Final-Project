@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 const date = require('date-and-time') 
 const fs = require('node:fs');
 var jsonParser = bodyParser.json()
+
 const logger = new FluentClient('fluentd.test', {
   socket: {
     host: '127.0.0.1',
@@ -23,12 +24,10 @@ app.get('/', function(request, response) {
   const msg = `run server1:3000`;
   logger.emit('follow', {from: msg, to: `Hello World!`});
   console.info(msg);
-  // response.send(msg + 'Hello World!');
   response.json({hello: 'Hello World!'});
 });
 
 app.post('/', jsonParser, function(request, response){
-  
   const input = request.body; 
   const now  =  new Date(); 
   input["time"] = date.format(now,'YYYY/MM/DD HH:mm:ss');
