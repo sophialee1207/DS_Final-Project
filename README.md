@@ -60,12 +60,12 @@
 ### 補充說明
 - 由於port佔用的問題，請在前端網頁開啟前，確認佔用 3000 與 3001 port
 - 注意更改儲存 log 的路徑，以確保後續 Fluentd 可讀取到 log
-- `index.js` 和 `index2.js` 提供 post 方法，用於接收訂單訊息，並寫入各自的 log 檔
+- `index.js` 和 `index2.js` 提供 POST 方法，用於接收訂單訊息，並寫入各自的 log 檔
 
 ---
 
 ### 📍 **Nginx**
-- 使用 Nginx 作為伺服器負載平衡
+- 使用 Nginx 進行負載平衡
 - 已準備好 `nginx.config` 設定檔，它包含本專案的配置設定
 
 ### 安裝與設定
@@ -77,14 +77,17 @@
 ```
 ### 補充說明
 使用 Nginx 進行負載平衡，配置如下：
+- 前端發送的訂單，會統一由 80 端口接收訊息
 - service1 啟動於 `localhost:3000`
 - service2 啟動於 `localhost:3001`
-- Nginx 會輪流將請求傳送至 service1 和 service2
+- Nginx 會根據流量輪流將請求傳送至 service1 和 service2
 
 ---
 
 ### 📍 **Fluentd**
-- 使用 Fluentd 作為日誌管理工具
+- 使用 Fluentd 作為集中管理所有指定路徑下的日誌
+- 可使用tag來區分篩選的資料
+- 可安裝其他工具套件，本專案使用 MongoDB 套件並將log存進資料庫
 - 已準備好 `fluentd.config` 設定檔，它包含了本專案的配置設定
 
 ### 安裝與設定
@@ -94,6 +97,7 @@
 - 設定 MongoDB 資訊，包含位置、database、collection
 
 ### 補充說明
+- 在<source>中設定log檔案路徑
 - 當 service1 或 service2 寫入 log 檔時，Fluentd 會監控並將新增的段落匯入 MongoDB 所設定的 Database 與 Collection
 
 ---
