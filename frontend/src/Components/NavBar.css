@@ -1,0 +1,14 @@
+.large-font
+{
+    font-size: 1.3rem;
+    
+}
+.userName
+{
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: pink;
+    text-decoration: none;
+    margin-left: .5rem;
+    text-transform:capitalize
+}
